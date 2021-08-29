@@ -30,8 +30,10 @@ def createshorturl(request : HttpRequest):
 
 def redirect_url(request : HttpRequest):
     try:
+        generator = URLGenerator()
         key = request.get_full_path().replace('/', '')
-        url = URL.objects.get(short_url__contains = key)
+        idx = generator.get_id(key)
+        url = URL.objects.get(id=idx)
         response = redirect(url.url_address)
         return response
     except Exception:
