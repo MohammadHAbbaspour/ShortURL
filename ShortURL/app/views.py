@@ -1,6 +1,6 @@
-from django.http.response import JsonResponse
+from django.http.response import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
 from django.shortcuts import redirect, render
-from django.http.request import HttpRequest
+from django.http.request import HttpHeaders, HttpRequest
 from .models import URLGenerator
 from .models import URL
 
@@ -26,3 +26,13 @@ def createshorturl(request : HttpRequest):
         'short_url' : url.short_url,
     }
     return JsonResponse(json_object)
+
+
+def redirect_url(request : HttpRequest):
+    try:
+        key = request.get_full_path().replace('/', '')
+        url = URL.objects.get(short_url__contains = key)
+        response = redirect(url.url_address)
+        return response
+    except Exception:
+        return HttpResponseNotFound()
