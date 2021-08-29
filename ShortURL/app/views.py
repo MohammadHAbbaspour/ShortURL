@@ -1,6 +1,6 @@
-from django.http.response import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
+from django.http.response import HttpResponseNotFound, JsonResponse
 from django.shortcuts import redirect, render
-from django.http.request import HttpHeaders, HttpRequest
+from django.http.request import HttpRequest
 from .models import URLGenerator
 from .models import URL
 
